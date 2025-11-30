@@ -11,24 +11,36 @@
   <h1>Generate your daily key!</h1>
   <button id="clickBtn">Generate</button>
   <p id="display">..</p>
+  <a id="ytLink" href="#" target="_blank">Click for YouTube</a>
+
+
   <script type="module" src="/src/renderer.js"></script>
 </body>
 
 
 <script>
-  let keys = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
+  let keys = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
+  let majorMinor = ['Major', 'Minor'];
 
-  let majorMinor = ['Major', 'Minor']
+  const display = document.getElementById("display");
+  const ytLink = document.getElementById("ytLink");
 
   document.getElementById("clickBtn").addEventListener("click", () => {
-    const randomIndex = Math.floor(Math.random() * keys.length);
-    const randomElement = keys[randomIndex]
+    const randomKey = keys[Math.floor(Math.random() * keys.length)];
+    const randommajorMin = majorMinor[Math.floor(Math.random() * majorMinor.length)];
 
-    const randomMajorMinIndex = Math.floor(Math.random() * majorMinor.length);
-    const randommajorMin = majorMinor[randomMajorMinIndex]
-    document.getElementById("display").textContent =
-      `Todays key is ${randomElement} ${randommajorMin}`;
+    display.textContent = `Today's key is ${randomKey} ${randommajorMin}`;
+
+    const url = `https://www.youtube.com/results?search_query=backing+track+${randomKey}${randommajorMin}`;
+    ytLink.href = url;
+    ytLink.textContent = "Click for YouTube";
+
+    ytLink.onclick = (e) => {
+      e.preventDefault();
+      window.open(url, "_blank", "width=1200,height=800,resizable=yes");
+    };
   });
 </script>
+
 
 </html>
