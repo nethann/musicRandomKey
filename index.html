@@ -1,13 +1,30 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hello World!</title>
 
-  </head>
-  <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
-    <script type="module" src="/src/renderer.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello World!</title>
+
+</head>
+
+<body>
+  <h1>Generate your daily key!</h1>
+  <button id="clickBtn">Generate</button>
+  <p id="display">..</p>
+  <script type="module" src="/src/renderer.js"></script>
+</body>
+
+
+<script>
+  let keys = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
+
+  const randomIndex = Math.floor(Math.random() * keys.length);
+  const randomElement = keys[randomIndex]
+
+  document.getElementById("clickBtn").addEventListener("click", () => {
+    document.getElementById("display").textContent =
+    `Todays key is: ${randomElement}`;
+  });
+</script>
+
 </html>
