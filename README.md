@@ -22,3 +22,12 @@ A simple Electron desktop app that generates a "daily music key" (Major or Minor
 ```bash
 git clone https://github.com/nethann/randomMusicKey.git
 cd randomMusicKey
+
+
+2. Install dependencies 
+```bash
+npm install 
+
+3. Start the app in development mode: 
+```bash 
+npm start
