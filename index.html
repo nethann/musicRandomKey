@@ -1,10 +1,9 @@
 <!doctype html>
 <html>
-
 <head>
   <meta charset="UTF-8" />
-  <title>Hello World!</title>
-
+  <title>Daily Key Generator</title>
+  <link rel="stylesheet" href="/src/index.css">
 </head>
 
 <body>
@@ -13,34 +12,59 @@
   <p id="display">..</p>
   <a id="ytLink" href="#" target="_blank">Click for YouTube</a>
 
+  <script>
+    const keys = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
+    const majorMinor = ['Major', 'Minor'];
 
-  <script type="module" src="/src/renderer.js"></script>
+    const display = document.getElementById("display");
+    const ytLink = document.getElementById("ytLink");
+
+    const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+
+    function formatTime(ms) {
+      const hours = Math.floor(ms / (60*60*1000));
+      const minutes = Math.floor((ms % (60*60*1000)) / (60*1000));
+      return `${hours}h ${minutes}m`;
+    }
+
+    document.getElementById("clickBtn").addEventListener("click", () => {
+      const stored = JSON.parse(localStorage.getItem("dailyKey"));
+      const now = Date.now();
+
+      let dailyKey, dailyType, timestamp;
+
+      if (stored && now - stored.timestamp < ONE_DAY_MS) {
+        // Key already exists, calculate remaining time
+        dailyKey = stored.key;
+        dailyType = stored.type;
+        timestamp = stored.timestamp;
+
+        const timeLeft = ONE_DAY_MS - (now - timestamp);
+        display.textContent = `Today's key is ${dailyKey} ${dailyType} — will reset in ${formatTime(timeLeft)}`;
+      } else {
+        // Generate a new key
+        dailyKey = keys[Math.floor(Math.random() * keys.length)];
+        dailyType = majorMinor[Math.floor(Math.random() * majorMinor.length)];
+        timestamp = now;
+
+        localStorage.setItem("dailyKey", JSON.stringify({
+          key: dailyKey,
+          type: dailyType,
+          timestamp: timestamp
+        }));
+
+        display.textContent = `Today's key is ${dailyKey} ${dailyType}`;
+      }
+
+      const url = `https://www.youtube.com/results?search_query=backing+track+${dailyKey}${dailyType === 'Major' ? '' : 'm'}`;
+      ytLink.href = url;
+      ytLink.textContent = "Click for YouTube";
+
+      ytLink.onclick = (e) => {
+        e.preventDefault();
+        window.open(url, "_blank", "width=1200,height=800,resizable=yes");
+      };
+    });
+  </script>
 </body>
-
-
-<script>
-  let keys = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
-  let majorMinor = ['Major', 'Minor'];
-
-  const display = document.getElementById("display");
-  const ytLink = document.getElementById("ytLink");
-
-  document.getElementById("clickBtn").addEventListener("click", () => {
-    const randomKey = keys[Math.floor(Math.random() * keys.length)];
-    const randommajorMin = majorMinor[Math.floor(Math.random() * majorMinor.length)];
-
-    display.textContent = `Today's key is ${randomKey} ${randommajorMin}`;
-
-    const url = `https://www.youtube.com/results?search_query=backing+track+${randomKey}${randommajorMin}`;
-    ytLink.href = url;
-    ytLink.textContent = "Click for YouTube";
-
-    ytLink.onclick = (e) => {
-      e.preventDefault();
-      window.open(url, "_blank", "width=1200,height=800,resizable=yes");
-    };
-  });
-</script>
-
-
 </html>
