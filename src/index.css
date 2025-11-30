@@ -9,10 +9,17 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 3em;
+  gap: 2em;
 }
 
 
 #clickBtn{
   cursor: pointer;
+
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 0px;
+
+  font-size: 18px;
 }

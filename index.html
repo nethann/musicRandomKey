@@ -18,12 +18,16 @@
 <script>
   let keys = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
 
-  const randomIndex = Math.floor(Math.random() * keys.length);
-  const randomElement = keys[randomIndex]
+  let majorMinor = ['Major', 'Minor']
 
   document.getElementById("clickBtn").addEventListener("click", () => {
+    const randomIndex = Math.floor(Math.random() * keys.length);
+    const randomElement = keys[randomIndex]
+
+    const randomMajorMinIndex = Math.floor(Math.random() * majorMinor.length);
+    const randommajorMin = majorMinor[randomMajorMinIndex]
     document.getElementById("display").textContent =
-    `Todays key is: ${randomElement}`;
+      `Todays key is ${randomElement} ${randommajorMin}`;
   });
 </script>
 
